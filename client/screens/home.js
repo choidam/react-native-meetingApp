@@ -1,0 +1,93 @@
+import React from 'react';
+import {
+    StyleSheet,
+    View,
+    Text,
+} from 'react-native';
+
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+
+import MyFavorScreen from './my_favor';
+import CommunityScreen from './community';
+import UserListScreen from './user_list';
+import ChatScreen from './chat';
+
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+class IconWithBadges extends React.Component {
+    render(){
+        const { name, badgeCount, color, size } = this.props;
+        return (
+            <View style={{width:24, height:24, margin:5 }}>
+                <Ionicons name={name} size={size} color={color} />
+                { badgeCount>0 && (
+                    <View style={styles.badgeStyle} >
+                        <Text style={styles.badgeTextStyle}> {badgeCount} </Text>
+                    </View>
+                )}
+            </View>
+        );
+    }
+}
+
+const ChatIconWithBadge = props => {
+    return <IconWithBadges {...props} badgeCount={3} />
+};
+
+const getTabBarIcon = (navigation, focused, tintColor) => {
+    const { routeName } = navigation.state;
+    let IconComponent = Ionicons;
+    let iconName;
+    if (routeName == 'Favor') {
+        iconName = 'ios-heart';
+    } else if (routeName == 'Community') {
+        iconName = 'ios-paper'
+    } else if (routeName == 'UserList') {
+        iconName = 'ios-people';
+    } else if (routeName == 'Chat') {
+        iconName = 'ios-notifications';
+        IconComponent = ChatIconWithBadge;
+    }
+    return <IconComponent name={iconName} size={25} color={tintColor} />;
+}
+
+export default createAppContainer(
+    createBottomTabNavigator(
+        {
+            Favor: {screen: MyFavorScreen},
+            Community : {screen: CommunityScreen},
+            UserList : {screen: UserListScreen},
+            Chat: {screen: ChatScreen},
+        },
+        {
+            defaultNavigationOptions: ({ navigation }) => ({
+                tabBarIcon: ({ focused, tintColor }) =>
+                  getTabBarIcon(navigation, focused, tintColor),
+            }),
+            tabBarOptions: {
+                activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+            }, 
+        }
+    )
+);
+
+
+const styles = StyleSheet.create({
+    badgeStyle : {
+        position: 'absolute',
+        right: -6,
+        top: -3,
+        backgroundColor: 'red',
+        borderRadius: 6,
+        width: 12,
+        height: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    badgeTextStyle: {
+        color: 'white',
+        fontSize: 10,
+        fontWeight: 'bold',
+    },
+});
