@@ -23,6 +23,7 @@ import {
     ListItem,
 } from 'native-base';
 import FlashMessage, { showMessage, hideMessage } from 'react-native-flash-message';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import * as firebase from 'firebase';
 
@@ -196,4 +197,12 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: 'gray',
     },  
+    titleStyle1: {
+        color: 'gray',
+        textAlign: 'center',
+        fontSize: 20,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        margin: 5,
+    },
 });

@@ -8,6 +8,7 @@ import {
     TextView,
     KeyboardAvoidingView,
     Button,
+    Image,
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import FlashMessage, { showMessage, hideMessage } from 'react-native-flash-message';
@@ -78,9 +79,16 @@ export default class SignupScreen extends React.Component {
     }
 
     render(){
+        const imguri = 'https://dezov.s3.amazonaws.com/media/pixel-heart-png7a0-4e36-9103-99858f8a8f5b.png';
+        //<Image style= {{width: 130, height: 130, }} source={{uri: 'https://dezov.s3.amazonaws.com/media/pixel-heart-png7a0-4e36-9103-99858f8a8f5b.png'}} />
         return (
             <Container style={styles.container}>
                 <Form>
+                    <Text style={ styles.titleStyle }>
+                        <Image style={{ width: 30, height: 30}} source={{ uri: imguri }} /> 
+                        CREATE ACCOUNT  
+                    </Text>
+                   
                     <Item floatingLabel>
                         <Label>Email</Label>
                         <Input 
@@ -143,5 +151,12 @@ const styles = StyleSheet.create({
         padding: 10,
         color: 'blue',
     },
+    titleStyle: {
+        color: 'gray',
+        textAlign: 'center',
+        fontSize: 20,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+    }
 });
 

@@ -6,6 +6,7 @@ import {
     ListView,
     TouchableOpacity,
     Alert,
+    Image,
 } from 'react-native';
 
 import{
@@ -121,10 +122,22 @@ export default class UserListScreen extends React.Component {
         }
 
         // 메세지 보내기 - db update
+
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var hours = new Date().getHours();
+        var min = new Date().getMinutes();
+        var sec = new Date().getSeconds();
+
+        var msgdate = date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec;
+        console.log(msgdate);
+
         var key = firebase.database().ref(`msg/${receiveuid}`).push().key 
         firebase.database().ref(`msg/${receiveuid}`).child(key).set({
             senduid: myUserId,
             text: this.state.msg,
+            date: msgdate,
         })
 
 
@@ -202,7 +215,7 @@ export default class UserListScreen extends React.Component {
                                         onPress={() => { 
                                             this.addFavorUser(data.val().uid)
                                             }}
-                                        style={{ marginTop: 7 }}
+                                        style={{ marginTop: 7, color: 'pink', }}
                                         >
                                         <Text style={styles.btnStyle}>add</Text>
                                     </Button>
@@ -252,5 +265,13 @@ const styles = StyleSheet.create({
         width: 300,
         margin: 10,
         fontSize: 15,
+    },
+    titleStyle: {
+        color: 'gray',
+        textAlign: 'center',
+        fontSize: 20,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        margin: 5,
     },
 })

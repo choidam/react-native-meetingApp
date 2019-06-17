@@ -6,6 +6,7 @@ import {
     Text,
     Button,
     View,
+    Image,
 } from 'react-native';
 import { 
     Container, 
@@ -15,6 +16,7 @@ import {
     Label 
 } from 'native-base';
 import firebase from 'firebase';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default class LoginScreen extends React.Component {
     constructor(props){
@@ -89,6 +91,12 @@ export default class LoginScreen extends React.Component {
         return (
             <Container style={styles.container}>
                 <Form>
+                    <View style={{justifyContent: 'center', alignItems: 'center',}}>
+                        <Image style= {{width: 130, height: 130, }} source={{uri: 'https://dezov.s3.amazonaws.com/media/pixel-heart-png7a0-4e36-9103-99858f8a8f5b.png'}} />
+                    </View>
+
+                    <Text style={ styles.ttlstyle }> " TTL " </Text>
+                    <Text style={ styles.description }>Time To Love <Ionicons name='ios-flash' size={20}/></Text>
                     <Item floatingLabel>
                         <Label>Email</Label>
                         <Input 
@@ -116,7 +124,7 @@ export default class LoginScreen extends React.Component {
                         >
                     </Button>
 
-                    <View style={{ paddingVertical: 15 }} />
+                    <View style={{ paddingVertical: 5 }} />
 
                     <Button
                         title='signup'
@@ -139,4 +147,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
     },
+    ttlstyle: {
+        textAlign: 'center',
+        fontStyle: 'italic',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    description:{
+        textAlign: 'center',
+        color: 'gray',
+        fontStyle: 'italic',
+    },
 });
+
+/*
+<Ionicons name='ios-heart' size={100} style={{ textAlign: 'center', color: 'pink'}}/>
+*/

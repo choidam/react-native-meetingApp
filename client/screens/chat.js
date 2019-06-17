@@ -54,11 +54,14 @@ export default class ChatScreen extends React.Component {
                             <TouchableOpacity>
                                 <View style={styles.itemcontainer}>
                                     <Button 
+                                        style={{ padding: 15, }}
                                         full
                                         info
-                                        rounded
-                                    >
-                                        <Text style={{ color: 'white' }}>{data.val().text}</Text>  
+                                        rounded>
+                                        <View style={styles.itemcontainer}>
+                                            <Text style={{ color: 'white', leftMargin: 10, }}>{data.val().text}</Text>  
+                                            <Text style={{ color: 'white', fontSize: 8, leftMargin: 10, }}>{data.val().date}</Text>  
+                                        </View>
                                     </Button>
                                 </View>
                             </TouchableOpacity>

@@ -226,5 +226,13 @@ const styles = StyleSheet.create({
     nameStyle: {
         fontWeight: 'bold',
         fontSize: 15,
-    }
+    },
+    titleStyle: {
+        color: 'gray',
+        textAlign: 'center',
+        fontSize: 20,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        margin: 5,
+    },
 })

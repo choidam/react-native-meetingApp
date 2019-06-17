@@ -46,13 +46,5 @@ class App extends React.Component {
     );
   }
 }
-
+console.disableYellowBox = true;
 export default App;
-
-/*
-export default function App(){
-  return (
-    <AppContainer/>
-  )
-}
-*/

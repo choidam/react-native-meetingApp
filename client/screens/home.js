@@ -15,25 +15,6 @@ import MyPageScreen from './my_page';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-class IconWithBadges extends React.Component {
-    render(){
-        const { name, badgeCount, color, size } = this.props;
-        return (
-            <View style={{width:24, height:24, margin:5 }}>
-                <Ionicons name={name} size={size} color={color} />
-                { badgeCount>0 && (
-                    <View style={styles.badgeStyle} >
-                        <Text style={styles.badgeTextStyle}> {badgeCount} </Text>
-                    </View>
-                )}
-            </View>
-        );
-    }
-}
-
-const ChatIconWithBadge = props => {
-    return <IconWithBadges {...props} badgeCount={3} />
-};
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
     const { routeName } = navigation.state;
@@ -47,7 +28,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
         iconName = 'ios-people';
     } else if (routeName == 'Chat') {
         iconName = 'ios-notifications';
-        IconComponent = ChatIconWithBadge;
+        // IconComponent = ChatIconWithBadge;
     } else if (routeName == 'MyPage') {
         iconName = 'ios-menu';
     }

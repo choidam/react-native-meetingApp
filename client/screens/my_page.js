@@ -22,6 +22,7 @@ import FlashMessage, { showMessage, hideMessage } from 'react-native-flash-messa
 
 import firebase from 'firebase';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { getPixelSizeForLayoutSize } from 'react-native/Libraries/Utilities/PixelRatio';
 
 export default class MyPageScreen extends React.Component {
 
@@ -125,16 +126,16 @@ export default class MyPageScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Ionicons name='ios-person' size={100} />
-                <Text style={{ fontWeight: 'bold', padding: 10, fontSize: 17, }}>account : {this.state.email}</Text>
-                <Text style={styles.info}>berry : {this.state.berry}</Text>
-                <Text style={styles.info}>name : {this.state.beforeName}</Text>
-                <Text style={styles.info}>gender : {this.state.beforeGender}</Text>
-                <Text style={styles.info}>age : {this.state.beforeAge}</Text>
-                <Text style={styles.info}>area : {this.state.beforeArea}</Text>
+                <Text style={{ fontWeight: 'bold', padding: 10, fontSize: 17, }}>{this.state.email}</Text>
+                <Text style={styles.info}><Ionicons name='ios-flash' size={20}/>{' '}berry : {this.state.berry}</Text>
+                <Text style={styles.info}><Ionicons name='ios-flash' size={20}/>{' '}name : {this.state.beforeName}</Text>
+                <Text style={styles.info}><Ionicons name='ios-flash' size={20}/>{' '}gender : {this.state.beforeGender}</Text>
+                <Text style={styles.info}><Ionicons name='ios-flash' size={20}/>{' '}age : {this.state.beforeAge}</Text>
+                <Text style={styles.info}><Ionicons name='ios-flash' size={20}/>{' '}area : {this.state.beforeArea}</Text>
 
                 <View style={{ paddingVertical: 35 }} />
 
-                <Text style={{ fontSize: 20, fontWeight: 'bold'}}>Settings</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold'}}><Ionicons name='ios-settings' size={20}/>{' '}Settings</Text>
 
                 <View style={{ paddingVertical: 10 }} />
 
@@ -244,6 +245,8 @@ const styles = StyleSheet.create({
     },
     info:{
         padding: 2,
+        color: 'gray',
+        fontStyle: 'italic',
     },
 });
 
