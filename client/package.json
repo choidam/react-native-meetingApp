@@ -8,14 +8,22 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "babel-eslint": "^10.0.1",
+    "concurrently": "^4.1.0",
     "expo": "^33.0.0",
+    "expo-image-picker": "^5.0.2",
+    "firebase": "^6.2.0",
+    "mysql": "^2.17.1",
+    "native-base": "^2.12.1",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-elements": "^1.1.0",
     "react-native-flash-message": "^0.1.13",
     "react-native-picker-select": "^6.1.1",
+    "react-native-search-bar": "^3.4.2",
+    "react-native-search-box": "^0.0.19",
     "react-native-web": "^0.11.4",
     "react-navigation": "^3.11.0"
   },

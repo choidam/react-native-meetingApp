@@ -11,6 +11,7 @@ import MyFavorScreen from './my_favor';
 import CommunityScreen from './community';
 import UserListScreen from './user_list';
 import ChatScreen from './chat';
+import MyPageScreen from './my_page';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -47,6 +48,8 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
     } else if (routeName == 'Chat') {
         iconName = 'ios-notifications';
         IconComponent = ChatIconWithBadge;
+    } else if (routeName == 'MyPage') {
+        iconName = 'ios-menu';
     }
     return <IconComponent name={iconName} size={25} color={tintColor} />;
 }
@@ -58,6 +61,7 @@ export default createAppContainer(
             Community : {screen: CommunityScreen},
             UserList : {screen: UserListScreen},
             Chat: {screen: ChatScreen},
+            MyPage : {screen: MyPageScreen},
         },
         {
             defaultNavigationOptions: ({ navigation }) => ({
@@ -71,7 +75,6 @@ export default createAppContainer(
         }
     )
 );
-
 
 const styles = StyleSheet.create({
     badgeStyle : {

@@ -3,198 +3,145 @@ import {
     StyleSheet,
     View,
     TextInput,
+    Alert,
+    Text,
+    TextView,
+    KeyboardAvoidingView,
     Button,
-    Alert
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import FlashMessage, { showMessage, hideMessage } from 'react-native-flash-message';
+import { Container, Content, Header, Form, Input, Item, Label } from 'native-base';
+import firebase from 'firebase';
 
 export default class SignupScreen extends React.Component {
+
     constructor(props){
         super(props);
         this.inputRefs = {};
-        this.state = {
-            id: '',
-            pw: '',
-            age: '',
-            gender : undefined,
-            genderItem : [
-                {
-                    label: 'female',
-                    value: 'female',
-                },
-                {
-                    label: 'male',
-                    value: 'male',
-                },
-            ],
-            area: 'undefined',
-            areaItem: [
-                {
-                    label: 'seoul',
-                    value: 'seoul'
-                },
-                {
-                    label: 'busan',
-                    value: 'busan',
-                },
-                {
-                    label: 'jeju',
-                    value: 'jeju',
-                },
-            ],
-        };
-        this.requestSignup = this.requestSignup.bind(this);
+        this.state = ({
+            email: '',
+            password: '',
+            password2: '',
+        });
     }
 
-    requestSignup(){   
-        console.log('signup requested');
-        console.log(this.state);
-
-        const id = this.state.id;
-        const pw = this.state.pw;
-        const gender = this.state.gender;
-        const area = this.state.area;
-        const age = this.state.age;
-
-        // 회원 가입 실패
-        if(id=='' || pw=='' || gender==undefined || area == undefined || age ==''){
-
+    signupUser = (email,password) => {
+        // 모두 입력하지 않았을 때 
+        if(email=='' || password=='' || this.state.password2==''){
+            console.log('parameter error');
             showMessage({
-                message: 'Error!',
+                message: 'Signup Error!',
                 description: 'make sure input all parameters',
                 icon: 'auto',
                 type: 'danger',
             });
+            return;
+        }
 
-        } else { // 회원 가입에 성공했을 경우 
-
+        // 비밀번호 - 비밀번호 확인이 다를 때 
+        if(this.state.password != this.state.password2){
+            console.log('password error');
             showMessage({
-                message: "Congratulations!",
-                description: "signup succeed!",
-                icon: "auto",
-                type:"success",
+                message: 'Password Error!',
+                description: 'password is diffrent',
+                icon: 'auto',
+                type: 'danger',
             });
-        }   
+            return;
+        }
+
+        // firebase auth에 email, password 저장 
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .catch(function(error) {
+            
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode == 'auth/weak-password') {
+                Alert.alert(
+                    'Password Error!',
+                    'Password must be longer than 6 letters', [{ text: 'OK', }]
+                );
+            } else {
+                alert(errorMessage);
+            }
+            console.log(error);
+            return;
+        });
+
+        showMessage({
+            message: "Congratulations!",
+            description: "signup succeed!",
+            icon: "auto",
+            type:"success",
+        });
     }
 
     render(){
         return (
-            <View style ={styles.container}>
-                <TextInput
-                    style={styles.textStyle}
-                    autoFocus={true}
-                    placeholder = 'input your id'
-                    value={this.state.id}
-                    onChangeText = {(text)=> this.setState({id: text })}
-                />
-                <TextInput 
-                    style={styles.textStyle}
-                    placeholder='input your password'
-                    value={this.state.pw}
-                    onChangeText={(text) => this.setState({pw: text })}
-                    secureTextEntry={true}
-                />
+            <Container style={styles.container}>
+                <Form>
+                    <Item floatingLabel>
+                        <Label>Email</Label>
+                        <Input 
+                            autoCorrect = {false}
+                            autoCapitalize='none'
+                            onChangeText={(email) => this.setState({email: email})}
+                        />
+                    </Item>
+                         
+                    <Item floatingLabel>
+                        <Label>Password</Label>
+                        <Input 
+                            secureTextEntry={true}
+                            autoCorrect = {false}
+                            autoCapitalize='none'
+                            onChangeText={(password) => this.setState({password: password})}
+                        />
+                    </Item>
 
-                <RNPickerSelect
-                    placeholder={{
-                        label: 'Select gender',
-                        value: null,
-                    }}
-                    items={this.state.genderItem}
-                    onValueChange={(value) => {
-                        this.setState({
-                            gender: value,
-                        });
-                    }}
-                    onUpArrow={() => {
-                        this.inputRefs.name.focus();
-                    }}
-                    onDownArrow={() => {
-                        this.inputRefs.picker2.togglePicker();
-                    }}
-                    style={{ ...pickerSelectStyles }}
-                    value={this.state.gender}
-                    ref={(el) => {
-                        this.inputRefs.picker = el;
-                    }}
-                /> 
-                
+                    <Item floatingLabel>
+                        <Label>Password confirm</Label>
+                        <Input 
+                            secureTextEntry={true}
+                            autoCorrect = {false}
+                            autoCapitalize='none'
+                            onChangeText={(password2) => this.setState({password2: password2})}
+                        />
+                    </Item>
 
-                <View style={{ paddingVertical: 3 }} />
+                    <View style={{ paddingVertical: 20 }} />
 
-                <RNPickerSelect
-                    placeholder={{
-                        label: 'Select area',
-                        value: null,
-                    }}
-                    items={this.state.areaItem}
-                    onValueChange={(value) => {
-                        this.setState({
-                            area: value,
-                        });
-                    }}
-                    onUpArrow={() => {
-                        this.inputRefs.name.focus();
-                    }}
-                    onDownArrow={() => {
-                        this.inputRefs.picker2.togglePicker();
-                    }}
-                    style={{ ...pickerSelectStyles }}
-                    value={this.state.area}
-                    ref={(el) => {
-                        this.inputRefs.picker = el;
-                    }}
-                />
+                    <Button
+                        title='signup'
+                        style={{marginTop:10}}
+                        onPress={() => this.signupUser(this.state.email, this.state.password, this.state.password2 )}
+                        >
+                        <Text style={{color: 'white'}}>Sign up</Text>
+                    </Button>
 
-                <TextInput 
-                    style={styles.textStyle}
-                    placeholder='input your age'
-                    value={this.state.age}
-                    onChangeText={(text)=>this.setState({age: text})}
-                />
-
-                <Button
-                    title='signup'
-                    onPress = {this.requestSignup}
-                />
+                </Form>
                 <FlashMessage position='top'/>
-            </View>
+            </Container>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 30,
+        flex:1,
         backgroundColor: '#fff',
         justifyContent: 'center',
-        paddingHorizontal: 10,
-        alignItems: 'center',
-        flex:1
-    },
-    textStyle: {
-        backgroundColor: "#fff",
-        height: 40,
-        width: 400,
-        margin: 5,
         padding: 10,
-        borderWidth: 1,
-        borderColor: "#eee",
-        borderRadius: 10
+    },
+    pwNotConfirmStyle : {
+        padding: 10,
+        color: 'red',
+        textAlign: 'left',
+    },
+    pwConfirmStyle: {
+        padding: 10,
+        color: 'blue',
     },
 });
 
-const pickerSelectStyles = StyleSheet.create({
-    inputIOS: {
-        fontSize: 13,
-        paddingTop: 13,
-        paddingHorizontal: 10,
-        paddingBottom: 12,
-        borderWidth: 1,
-        borderColor: '#eee',
-        borderRadius: 10,
-        backgroundColor: 'white',
-        color: 'black',
-    },
-});
